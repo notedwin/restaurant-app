@@ -1,0 +1,39 @@
+
+{% extends 'bootstrap.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_content %}
+
+        <nav class="navbar navbar-expand-lg navbar-light" style='background-color: #006491;'>
+            <a class="navbar-brand">Domino's 2</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup" >
+            <div class="navbar-nav">
+                <a class="nav-item nav-link">Order Online</a>
+                <a class="nav-item nav-link">Menu</a>
+                <a class="nav-item nav-link">Rewards</a>
+                <a class="nav-item nav-link">Sign In</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+
+            </div>
+        </div>
+
+        </nav>
+        <div class="container">
+        <h1>{% block title %}Start Your Order{% endblock %}</h1>
+        <p>
+            <a>home</a>
+        </p>
+
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
+{% endblock %}
