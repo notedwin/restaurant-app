@@ -1,0 +1,10 @@
+.navbar > *,
+nav{
+    font-size: 1.8rem;
+    background-color: #222222 !important;
+    color: white;
+}
+
+#images{
+    display: inline-block;
+}
