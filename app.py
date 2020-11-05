@@ -2,6 +2,8 @@ from flask import Flask, request, session, redirect, url_for, render_template, f
 from flask_bootstrap import Bootstrap
 from flask_fontawesome import FontAwesome
 
+from model import RegForm
+
 
 app = Flask(__name__,static_url_path='/static',static_folder='static')
 #app.config.from_pyfile('config.cfg')
@@ -40,7 +42,10 @@ def login():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-    if request.method == 'GET' :
+    form = RegForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        return 'We confirm your registration!'
+    elif request.method == 'GET' :
         return render_template('customer/register.html')
 
 @app.route('/staff-portal')
