@@ -1,0 +1,14 @@
+{%- extends "customer/base.html" %}
+{% block content %}
+<div class="card-header">
+    <h2>How do you want your Sonimod's today? <h2>
+</div>
+<div class="card-body">
+    <ul class="list-inline" style="display:flex; justify-content: space-around;">
+        <li class="list-inline-item"><span class="fas fa-pizza-slice" style="font-size: 10rem;"><br><button type="button" class="btn btn-dark" name="Delivery">Delivery</button></span></li>
+        <li class="list-inline-item"><span class="fas fa-pizza-slice" style="font-size: 10rem;"><br><button type="button" class="btn btn-dark" name="Pick-up">Pick-up</button></span></li>
+        <li class="list-inline-item"><span class="fas fa-pizza-slice" style="font-size: 10rem;"><br><button type="button" class="btn btn-dark" name="Dine-In">Dine-In</button></span></li>
+    </ul>
+</div>
+<a class="btn btn-lg btn-success" href="<!-- Post Sign in -->">Continue to <!-- get order type -->.</a>
+{% endblock %}

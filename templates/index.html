@@ -1,4 +1,4 @@
-{%- extends "base.html" %}
+{%- extends "customer/base.html" %}
 
 {# Loads some of the macros included with Flask-Bootstrap. We are using the
    utils module here to automatically render Flask's flashed messages in a
@@ -10,11 +10,12 @@
    This will keep scripts at the page end and a navbar you add on later
    intact. #}
 {% block content %}
-<div class="container">
-    <div id="images">
-        <img src={{ url_for('static', filename = 'pizza-sliced.jpg') }} style="max-width:50%;
-  max-height:100%;"><img src={{ url_for('static', filename = 'pizza-oven.jpg') }} style="max-width:50%;
-max-height:100%;">
-    </div>
+
+<!--
+    <div class="container">
+    <div id="images"><img src={{ url_for('static', filename = 'pizza-sliced.jpg') }} style="max-width:50%; max-height:100%;"><img src={{ url_for('static', filename = 'pizza-oven.jpg') }} style="max-width:50%;max-height:100%;"></div>
 </div>
+-->
+
+
 {%- endblock %}
