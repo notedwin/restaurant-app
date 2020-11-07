@@ -1,0 +1,16 @@
+{%- extends "customer/base.html" %}
+{% block content %}
+{% for i in items %}
+<div class="nameAndPrice">
+    <span class="name">
+        <p>{{i.name}}</p>
+    </span>
+    <span class="price">
+        <p>{{i.price}}</p>
+    </span>
+</div>
+<div class="description">
+    <p>{{i.description}}</p>
+</div>
+{% endfor %}
+{% endblock %}
