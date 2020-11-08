@@ -1,17 +1,35 @@
 {%- extends "customer/base.html" %}
 {% block content %}
 <h2 class="text-center">How do you want your Sonimod's today? <h2>
-
-        <ul class="list-inline" style="display:flex; justify-content: space-around;">
-            <li class="list-inline-item"><span class="fas fa-pizza-slice" style="font-size: 10rem;"><br><button
-                        type="button" class="btn btn-dark" name="Delivery">Delivery</button></span></li>
-            <li class="list-inline-item"><span class="fas fa-pizza-slice" style="font-size: 10rem;"><br><button
-                        type="button" class="btn btn-dark" name="Pick-up">Pick-up</button></span></li>
-            <li class="list-inline-item"><span class="fas fa-pizza-slice" style="font-size: 10rem;"><br><button
-                        type="button" class="btn btn-dark" name="Dine-In">Dine-In</button></span></li>
-        </ul>
+        <form method="post" action="/order">
+            <ul class="list-inline" style="display:flex; justify-content: space-around;">
+                <li class="list-inline-item">
+                    <br>
+                    <span class="fas fa-pizza-slice" style="font-size: 3rem;">
+                        <br>
+                        <h2>Delivery</h2>
+                        <input type="button" class="btn btn-dark" name="order-type" value="Delivery"></input>
+                    </span>
+                <li class="list-inline-item">
+                    <br>
+                    <span class="fas fa-pizza-slice" style="font-size: 3rem;">
+                        <br>
+                        <h2>Pick-Up</h2>
+                        <input type="button" class="btn btn-dark" name="order-type" value="Pick-Up"></input>
+                    </span>
+                </li>
+                <li class="list-inline-item">
+                    <br>
+                    <span class="fas fa-pizza-slice" style="font-size: 3rem;">
+                        <br>
+                        <h2>Dine-In</h2>
+                        <input type="button" class="btn btn-dark" name="order-type" value="Dine-In"></input>
+                    </span>
+                </li>
+            </ul>
+        </form>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-lg btn-success" href={{ url_for('login')}}>Continue to
-            <!-- get order type -->.</a>
+            <a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Guest</a>
+            <a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Sonimod Memeber</a>
         </div>
         {% endblock %}

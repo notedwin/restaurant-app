@@ -4,26 +4,37 @@ from app.model import User,Item
 from app.forms import RegistrationForm, LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 
+# TODO put content in index and about us page
+# basic things other restaurant websites do.
+# index, menu, and about are only html
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route('/menu')
+def menu():
+    return render_template('customer/menu.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @app.route('/order',methods=['GET','POST'])
 def order():
     if request.method == 'POST':
-        if request.form['submit_button'] == 'Do Something':
-            pass # do something
-        elif request.form['submit_button'] == 'Do Something Else':
+        if request.form['submit_button'] == 'Delivery':
+            print("nar")
+        elif request.form['submit_button'] == 'Pick-up':
             pass # do something else
+        elif request.form['submit_button'] == 'Pick-up':
+            print("fuck")
         else:
             pass # unknown
     elif request.method == 'GET':
         return render_template('customer/order.html')
 
-
-@app.route('/menu')
-def menu():
-    return render_template('customer/menu.html')
 
 @app.route('/cart')
 def cart():
@@ -72,6 +83,11 @@ def account():
 @app.route('/order/create')
 @login_required
 def create_order():
+    return render_template('customer/create-order.html', title='Create an Order')
+
+@app.route('/order/create')
+@login_required
+def guest_create_order():
     return render_template('customer/create-order.html', title='Create an Order')
 
 

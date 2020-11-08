@@ -25,9 +25,10 @@ python cs425-groceryStore/manage.py runserver
 ## Project Status  
 
 In development.  
-[ToDo's](ToDo.md)
+[ToDo's](TODO.md)
 
 ## References
 
 [Stripe API](https://stripe.com/)  
 [BootStrap](https://getbootstrap.com/)
+[Flask](https://flask.palletsprojects.com/en/1.1.x/)

@@ -1,6 +1,13 @@
 {%- extends "customer/base.html" %}
 {% block content %}
 <div class="card-header">
-    <h2>{{ current_user.first_name }}
+    <h2>Hello, {{ current_user.first_name }}
+</div>
+
+<div class="card-body">
+    <h3>Points: 800</h3>
+    <button class="btn btn-dark"><h3>View Order History</h3></button>
+    <button class="btn btn-dark"><h3>View saved Cards</h3></button>
+    <button class="btn btn-dark"><h3>View saved addresses</h3></button>
 </div>
 {%- endblock %}
