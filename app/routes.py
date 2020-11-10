@@ -8,6 +8,13 @@ from flask_login import login_user, current_user, logout_user, login_required
 # basic things other restaurant websites do.
 # index, menu, and about are only html
 
+
+# def products(request):
+#     context = {
+#         'items': Item.objects.all()
+#     }
+#     return render(request, "products.html", context)
+
 @app.route('/')
 def index():
     return render_template('index.html')
