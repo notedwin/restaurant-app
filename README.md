@@ -18,8 +18,8 @@ Optional: Create a virtualenv
 Starting the application in base directory:
 
 ```Bash
-pip install -r requirements.txt
-python cs425-groceryStore/manage.py runserver
+python3 -m pip install -r requirements.txt
+python3 run.py
 ```
 
 ## Project Status  
