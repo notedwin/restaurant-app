@@ -1,17 +1,24 @@
 #!/bin/bash
 
-mkdir run
-mkdir logs
+mkdir /var/lib/jenkins/workspace/restaurant/run
+mkdir /var/lib/jenkins/workspace/restaurant/logs
+touch /var/lib/jenkins/workspace/restaurant/gunicorn_supervisor.log 
+touch /var/lib/jenkins/workspace/restaurant/run/gunicorn.sock
+
+cd /var/lib/jenkins/workspace/restaurant/
+
 python3 -m venv venv
 source venv/bin/activate
 python3 -m pip install -r requirements.txt
 
-port = `ps aux | grep restaurant | awk '{split($0,a," "); print a[2]}' | head -n 1`
-kill $port
+kill `ps aux | grep restaurant | awk '{split($0,a," "); print a[2]}' | head -n 1`
 
-sudo gunicorn run:app \
+gunicorn run:app \
 --name restaurant-app \
---workers 1 \ #raspberry pi is low on memory 
+--workers 1 \
+--user=jenkins \
+--group=jenkins \
 --bind=unix:/var/lib/jenkins/workspace/restaurant/run/gunicorn.sock  \
- --log-level=debug   \
- --log-file=-
+--log-level=debug   \
+--log-file=- \
+--daemon
