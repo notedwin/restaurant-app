@@ -4,6 +4,10 @@ Restaurant App is an online web application powered by Flask Python Framework fo
 
 This project was initially made for CS487: Software Engineering at [Illinois Tech](https://www.iit.edu/).
 
+## Live Demo
+
+[Restaurant App](http://restaurant.edwin.computer/) 
+
 ## Features
 
 - User Creation and User Authentication
