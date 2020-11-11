@@ -1,4 +1,5 @@
 # Restaurant App
+[![Build Status](https://jenkins.edwin.computer/job/restaurant/badge/icon)](https://jenkins.edwin.computer/job/restaurant/)
 
 Restaurant App is an online web application powered by Flask Python Framework for a restaurant application.
 

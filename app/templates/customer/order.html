@@ -29,7 +29,9 @@
             </ul>
         </form>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Guest</a>
-            <a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Sonimod Memeber</a>
+            <ul class="list-inline" style="display:flex; justify-content: space-between;">
+                <li class="list-inline-item"><a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Guest</a></li>
+                <li class="list-inline-item"><a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Sonimod Memeber</a></li>
+            </ul>
         </div>
         {% endblock %}

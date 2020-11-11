@@ -2,3 +2,83 @@
 {% import "bootstrap/utils.html" as utils %}
 
 <!---TODO put content here-->
+{% block content %}
+
+<div class="jumbotron mb-sm-0">
+  <div class="row align-items-center">
+    <div class="col-lg-7">
+      <img class="img-fluid rounded" src="{{url_for('static', filename='pizza-sliced.jpg')}}" alt="">
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-5">
+      <h1>Sonimod's Pizza and Pasta</h1>
+      <p>A well known pizzera based in chicago from 1920. Some important event</p>
+      <a class="btn btn-dark" href="{{ url_for('order') }}">Create an order now!</a>
+    </div>
+    <!-- /.col-md-4 -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="card text-white bg-dark my-4 text-center" style="width: 100%;">
+    <div class="card-body">
+      <h2 class="text-white">Best New York style pizza in Chicago!</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Menu</h2>
+      <p>View our menu</p>
+      <p><a class="btn btn-dark" href="{{ url_for('menu') }}" role="button">View Menu »</a></p>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Sonimod Rewards</h2>
+      <p>Create an Account to get rewards!</p>
+      <p><a class="btn btn-dark" href="{{ url_for('register') }}" role="button">Register »</a></p>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Already a memeber?</h2>
+      <p>Sign in to your Sonimod Rewards Account</p>
+      <p><a class="btn btn-dark" href="{{ url_for('login') }}" role="button">Sign In »</a></p>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Location</h2>
+      <p>10 W 35st<br>
+      Chicago, Il 60616<br>
+      313-313-1313</p>
+    </div>
+
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-4">
+      <h2>Hours</h2>
+      <p>
+        Monday: 9AM–12AM<br>
+        Tuesday: 9AM–12AM<br>
+        Wednesday: 9AM–12AM<br>
+        Thursday: 9AM–12AM<br>
+        Friday: 9AM–12AM<br>
+        Saturday: 9AM–12AM<br>
+        Sunday: 9AM–12AM
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+<!-- /.row -->
+
+</div>
+<!-- /.container -->
+{% endblock %}
