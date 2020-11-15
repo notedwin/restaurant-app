@@ -6,6 +6,7 @@ test -d /var/lib/jenkins/workspace/restaurant/run/ || mkdir -p /var/lib/jenkins/
 
 python3 -m venv venv
 source venv/bin/activate
+cd /var/lib/jenkins/workspace/restaurant
 python3 -m pip install -r requirements.txt
 
 kill `ps aux | grep restaurant | awk '{split($0,a," "); print a[2]}' | head -n 1`
