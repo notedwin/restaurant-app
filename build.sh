@@ -1,8 +1,8 @@
 #!/bin/bash
 
-test -d touch /var/lib/jenkins/workspace/restaurant/logs/ || mkdir -p touch /var/lib/jenkins/workspace/restaurant/logs/
+test -d /var/lib/jenkins/workspace/restaurant/logs/ || mkdir -p /var/lib/jenkins/workspace/restaurant/logs/
 
-test -d touch /var/lib/jenkins/workspace/restaurant/run/ || mkdir -p touch /var/lib/jenkins/workspace/restaurant/run/
+test -d /var/lib/jenkins/workspace/restaurant/run/ || mkdir -p /var/lib/jenkins/workspace/restaurant/run/
 
 python3 -m venv venv
 source venv/bin/activate
