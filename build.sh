@@ -1,11 +1,8 @@
 #!/bin/bash
 
-mkdir /var/lib/jenkins/workspace/restaurant/run
-mkdir /var/lib/jenkins/workspace/restaurant/logs
-touch /var/lib/jenkins/workspace/restaurant/gunicorn_supervisor.log 
-touch /var/lib/jenkins/workspace/restaurant/run/gunicorn.sock
+test -d touch /var/lib/jenkins/workspace/restaurant/logs/ || mkdir -p touch /var/lib/jenkins/workspace/restaurant/logs/
 
-cd /var/lib/jenkins/workspace/restaurant/
+test -d touch /var/lib/jenkins/workspace/restaurant/run/ || mkdir -p touch /var/lib/jenkins/workspace/restaurant/run/
 
 python3 -m venv venv
 source venv/bin/activate
@@ -20,5 +17,4 @@ gunicorn run:app \
 --group=jenkins \
 --bind=unix:/var/lib/jenkins/workspace/restaurant/run/gunicorn.sock  \
 --log-level=debug   \
---log-file=- \
---daemon
+--log-file=-

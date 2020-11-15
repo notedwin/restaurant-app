@@ -4,11 +4,6 @@ from app.model import User,Item
 from app.forms import RegistrationForm, LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 
-# TODO put content in index and about us page
-# basic things other restaurant websites do.
-# index, menu, and about are only html
-
-
 # def products(request):
 #     context = {
 #         'items': Item.objects.all()

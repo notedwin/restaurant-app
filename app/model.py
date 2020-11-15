@@ -34,10 +34,10 @@ class Item(db.Model):
     def __repr__(self):
         return f"Item('{self.name}', '{self.cost}')"
 
-    #def get_absolute_url(self):
-    #    return reverse("core:product", kwargs={
-    #        'slug': self.slug
-    #    })
+#   def get_absolute_url(self):
+#       return reverse("core:product", kwargs={
+#        'slug': self.slug
+#    })
 #
     #def get_add_to_cart_url(self):
     #    return reverse("core:add-to-cart", kwargs={
