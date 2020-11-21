@@ -9,7 +9,7 @@ source venv/bin/activate
 cd /var/lib/jenkins/workspace/restaurant
 python3 -m pip install -r requirements.txt
 
-kill `ps aux | grep restaurant | awk '{split($0,a," "); print a[2]}' | head -n 1`
+kill `ps aux | grep restaurant-app | awk '{split($0,a," "); print a[2]}' | head -n 1`
 
 gunicorn run:app \
 --name restaurant-app \
