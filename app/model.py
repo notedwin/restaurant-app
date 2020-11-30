@@ -15,18 +15,27 @@ class User(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
-    email = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
+    points = db.Column(db.Integer, nullable=True, default=0)
+    #addresses = db.relationship('Address', backref='user', lazy=True)
     #stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
 
     def __repr__(self):
         return f"User('{self.first_name}', '{self.last_name}')"
 
+class Address(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    street_address = db.Column(db.String(120), nullable=False)
+    country = db.Column(db.String(120), nullable=False)
+    zip = db.Column(db.Integer,nullable=False)
+    default = db.Column(db.Boolean,default=False)
+    #person_id = db.Column(db.Integer, db.ForeignKey('person.id'),nullable=False)
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    description = db.Column(db.String(), nullable=False)
+    description = db.Column(db.String(), nullable=True)
     cost = db.Column(db.Numeric, nullable=False)
     #slug = models.SlugField()
     #image = models.ImageField()
@@ -50,6 +59,10 @@ class Item(db.Model):
     #    })
 
 #class Order(db.Model):
+#    user = db.Column()
+
+#class Order():
+    #pub_date = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
 #    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 #    items = models.ManyToManyField(OrderItem)
 #    ordered_date = models.DateTimeField()
@@ -90,23 +103,7 @@ class Item(db.Model):
 #        return self.get_total_item_price()
 #
 
-#
-#class Address(models.Model):
-#    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-#                             on_delete=models.CASCADE)
-#    street_address = models.CharField(max_length=100)
-#    apartment_address = models.CharField(max_length=100)
-#    country = CountryField(multiple=False)
-#    zip = models.CharField(max_length=100)
-#    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
-#    default = models.BooleanField(default=False)
-#
-#    def __str__(self):
-#        return self.user.username
-#
-#    class Meta:
-#        verbose_name_plural = 'Addresses'
-#
+
 #
 
 #class Payment(models.Model):

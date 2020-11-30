@@ -13,7 +13,7 @@ This project was initially made for CS487: Software Engineering at [Illinois Tec
 
 - User Creation and User Authentication
 - Order Creation
-- Payement through [Stripe API](https://stripe.com/)
+- Payment through [Stripe API](https://stripe.com/)
 - Employee Dashboard
 
 ## Getting Started
@@ -35,5 +35,5 @@ In development.
 ## References
 
 [Stripe API](https://stripe.com/)  
-[BootStrap](https://getbootstrap.com/)
-[Flask](https://flask.palletsprojects.com/en/1.1.x/)
+[BootStrap](https://getbootstrap.com/)  
+[Flask](https://flask.palletsprojects.com/en/1.1.x/)  

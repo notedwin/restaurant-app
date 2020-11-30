@@ -85,7 +85,11 @@ def account():
 @app.route('/order/create')
 @login_required
 def create_order():
-    return render_template('customer/create-order.html', title='Create an Order')
+    new_item = Item(name="water",description="wayer",cost=12.99)
+    db.session.add(new_item)
+    items = Item.query.all()
+    print(items)
+    return render_template('customer/create-order.html', title='Create an Order', items = items)
 
 @app.route('/order/create')
 @login_required
