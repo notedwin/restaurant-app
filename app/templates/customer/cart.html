@@ -20,12 +20,14 @@
                         <small class="text-muted">{{item.description}}</small>
                     </div>
                     <span class="text-muted">{{item.cost}}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (USD)</span>
-                    <strong></strong>
+                    <a href="{{ url_for('removeItem', productId=item.id)}}" class="btn btn-outline-error"
+                    style="width: 100%;">Remove</a>
                 </li>
                 {% endfor %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>{{total}}</strong>
+                </li>
             </ul>
 
         </div>

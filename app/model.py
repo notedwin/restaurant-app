@@ -41,7 +41,7 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(), nullable=True)
-    cost = db.Column(db.Numeric, nullable=False)
+    cost = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return f"Item('{self.id}', '{self.name}', '{self.cost}')"
@@ -58,8 +58,9 @@ class Order(db.Model):
     __table_args__ = {'extend_existing': True}
     orderid = db.Column(db.Integer, primary_key=True)
     order_date = db.Column(db.DateTime, nullable=False)
-    total_price = db.Column(db.DECIMAL, nullable=False)
+    total_price = db.Column(db.Integer, nullable=False)
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+    #items = relationship('Study', secondary=products_studies_association, backref='products')
 
 class OrderedProduct(db.Model):
     __table_args__ = {'extend_existing': True}

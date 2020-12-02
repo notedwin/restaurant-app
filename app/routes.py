@@ -16,7 +16,8 @@ def index():
 
 @app.route('/menu')
 def menu():
-    return render_template('customer/menu.html')
+    items = Item.query.all()
+    return render_template('customer/menu.html',items=items)
 
 @app.route('/about')
 def about():
@@ -27,13 +28,17 @@ def about():
 def order():
     if request.method == 'POST':
         if request.form['submit_button'] == 'Delivery':
-            print("nar")
+            # pass variable to create order
+            pass
         elif request.form['submit_button'] == 'Pick-up':
-            pass # do something else
+            # pass variable to create order
+            pass
         elif request.form['submit_button'] == 'Pick-up':
-            print("pickup")
+            # pass variable to create order
+            pass
         else:
-            pass # unknown
+            # return order
+            pass
     elif request.method == 'GET':
         return render_template('customer/order.html')
 
@@ -44,11 +49,12 @@ def cart():
         uid = current_user.id
         carts = Cart.query.filter_by(userid = uid).all()
         items = []
+        total = 0
         for cart in carts:
             item = Item.query.filter_by(id = cart.productid).first()
             items.append(item)
-        print(items)
-        return render_template('customer/cart.html', items = items)
+            total = total + item.cost
+        return render_template('customer/cart.html', items = items, total = total)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -111,13 +117,10 @@ def staff():
 @app.route("/addToCart/<int:productId>")
 @login_required
 def addToCart(productId):
-    #print(productId)
     # Using Flask-SQLAlchmy SubQuery
     if Cart.query.filter(Cart.userid == current_user.id).filter(Cart.productid == productId).one_or_none():
         cart_with_item = Cart.query.filter(Cart.userid == current_user.id).filter(Cart.productid == productId).one_or_none()
-        print(cart_with_item.quantity)
         cart_with_item.quantity = cart_with_item.quantity + 1
-        print(cart_with_item.quantity)
         db.session.merge(cart_with_item)
         db.session.flush()
         db.session.commit()
@@ -126,20 +129,27 @@ def addToCart(productId):
         db.session.merge(cart)
         db.session.flush()
         db.session.commit()
-        print("new cart")
 
-
-    print(current_user)
     # Using Flask-SQLAlchmy normal query
     # extractAndPersistKartDetailsUsingkwargs(productId)
     flash('Item successfully added to cart !!', 'success')
     return redirect(url_for('cart'))
 
-def extractAndPersistKartDetailsUsingSubquery(productId):
-    userId = User.query.with_entities(User.id).first()
-    userId = userId[0]
+@app.route("/removeItem/<int:productId>")
+@login_required
+def removeItem(productId):
+    # Using Flask-SQLAlchmy SubQuery
+    if Cart.query.filter(Cart.userid == current_user.id).filter(Cart.productid == productId).one_or_none():
+        Cart.query.filter(Cart.userid == current_user.id).filter(Cart.productid == productId).delete()
+        db.session.commit()
+    else:
+        flash('Item not in cart', 'error')
+        return redirect(url_for('cart'))
 
-    subqury = (Cart.userid == userId).filter(Cart.productid == productId).subquery()
-    qry = db.session.query(Cart.quantity).select_entity_from(subqury).all()
+    # Using Flask-SQLAlchmy normal query
+    # extractAndPersistKartDetailsUsingkwargs(productId)
+    flash('Item removed from cart !!', 'success')
+    return redirect(url_for('cart'))
+
 
     
