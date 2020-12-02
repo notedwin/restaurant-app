@@ -51,7 +51,7 @@ class Item(db.Model):
 @event.listens_for(Item.name, 'set')
 def receive_set(target, value, oldvalue, initiator):
     if value and (not target.slug or value != oldvalue):
-        target.slug = slugify(unicode(value))
+        target.slug = slugify(value)
 
 class Cart(db.Model):
     __table_args__ = {'extend_existing': True}

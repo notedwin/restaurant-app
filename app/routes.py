@@ -42,6 +42,10 @@ def order():
 def cart():
     return render_template('customer/cart.html')
 
+@app.route('/checkout')
+def checkout():
+    return render_template('customer/checkout.html')
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
