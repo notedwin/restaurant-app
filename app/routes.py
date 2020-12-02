@@ -31,7 +31,7 @@ def order():
         elif request.form['submit_button'] == 'Pick-up':
             pass # do something else
         elif request.form['submit_button'] == 'Pick-up':
-            print("fuck")
+            print("pickup")
         else:
             pass # unknown
     elif request.method == 'GET':
@@ -40,11 +40,15 @@ def order():
 
 @app.route('/cart')
 def cart():
-    return render_template('customer/cart.html')
-
-@app.route('/checkout')
-def checkout():
-    return render_template('customer/checkout.html')
+    if current_user.is_authenticated:
+        uid = current_user.id
+        carts = Cart.query.filter_by(userid = uid).all()
+        items = []
+        for cart in carts:
+            item = Item.query.filter_by(id = cart.productid).first()
+            items.append(item)
+        print(items)
+        return render_template('customer/cart.html', items = items)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -89,10 +93,7 @@ def account():
 @app.route('/order/create')
 @login_required
 def create_order():
-    new_item = Item(name="water",description="wayer",cost=12.99)
-    db.session.add(new_item)
     items = Item.query.all()
-    print(items)
     return render_template('customer/create-order.html', title='Create an Order', items = items)
 
 @app.route('/order/create')

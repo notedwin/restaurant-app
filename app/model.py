@@ -44,7 +44,7 @@ class Item(db.Model):
     cost = db.Column(db.Numeric, nullable=False)
 
     def __repr__(self):
-        return f"User('{self.id}', '{self.name}', '{self.cost}')"
+        return f"Item('{self.id}', '{self.name}', '{self.cost}')"
 class Cart(db.Model):
     __table_args__ = {'extend_existing': True}
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
@@ -52,7 +52,7 @@ class Cart(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"User('{self.userid}', '{self.productid}', '{self.quantity}')"
+        return f"Cart('{self.userid}', '{self.productid}', '{self.quantity}')"
 
 class Order(db.Model):
     __table_args__ = {'extend_existing': True}
