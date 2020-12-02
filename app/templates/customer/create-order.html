@@ -1,22 +1,19 @@
 {%- extends "customer/base.html" %}
 {% block content %}
-
+<div class="container">
+    <h1>Sonimod Menu</h1>
 {% for item in items %}
-<div class="nameAndPrice">
-    <span class="name">
-        <p>{{item.name}}</p>
-    </span>
-    <span class="price">
-        <p>{{item.cost}}</p>
-    </span>
-</div>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{item.name}}</h5>
+        <p>{{item.description}}</p>
+        <p class="card-text">Cost: {{item.cost}}</p>
 
-<div class="description">
-    <p>{{item.description}}</p>
+        <form action="{{ url_for('addToCart', productId=item.id)}}">
+            <input type="submit" value="Add to {{item.name}}" />
+        </form>
+    </div>
 </div>
-<input></input>
-<button> 
-    add {{item.name}}
-</button>
 {% endfor %}
+</div>
 {% endblock %}

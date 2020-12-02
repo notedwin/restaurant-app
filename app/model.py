@@ -42,17 +42,9 @@ class Item(db.Model):
     name = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(), nullable=True)
     cost = db.Column(db.Numeric, nullable=False)
-    slug = db.Column(db.String, index=True, unique=True)
-    #image = models.ImageField()
 
     def __repr__(self):
-        return f"Item('{self.name}', '{self.cost}')"
-
-@event.listens_for(Item.name, 'set')
-def receive_set(target, value, oldvalue, initiator):
-    if value and (not target.slug or value != oldvalue):
-        target.slug = slugify(value)
-
+        return f"User('{self.id}', '{self.name}', '{self.cost}')"
 class Cart(db.Model):
     __table_args__ = {'extend_existing': True}
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
@@ -60,5 +52,18 @@ class Cart(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"Cart('{self.userid}', '{self.productid}, '{self.quantity}')"
+        return f"User('{self.userid}', '{self.productid}', '{self.quantity}')"
 
+class Order(db.Model):
+    __table_args__ = {'extend_existing': True}
+    orderid = db.Column(db.Integer, primary_key=True)
+    order_date = db.Column(db.DateTime, nullable=False)
+    total_price = db.Column(db.DECIMAL, nullable=False)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+
+class OrderedProduct(db.Model):
+    __table_args__ = {'extend_existing': True}
+    ordproductid = db.Column(db.Integer, primary_key=True)
+    orderid = db.Column(db.Integer,db.ForeignKey('order.orderid'), nullable=False)
+    productid = db.Column(db.Integer,db.ForeignKey('item.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)

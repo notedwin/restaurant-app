@@ -1,6 +1,6 @@
 from flask import request, session, redirect, url_for, render_template, flash, send_from_directory, Markup, jsonify
 from app import app,db,bcrypt
-from app.model import User,Item
+from app.model import User,Item,Cart
 from app.forms import RegistrationForm, LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -105,3 +105,40 @@ def guest_create_order():
 def staff():
     #ask to sign in
     return render_template('staff/staff-portal.html')
+
+
+@app.route("/addToCart/<int:productId>")
+@login_required
+def addToCart(productId):
+    #print(productId)
+    # Using Flask-SQLAlchmy SubQuery
+    if Cart.query.filter(Cart.userid == current_user.id).filter(Cart.productid == productId).one_or_none():
+        cart_with_item = Cart.query.filter(Cart.userid == current_user.id).filter(Cart.productid == productId).one_or_none()
+        print(cart_with_item.quantity)
+        cart_with_item.quantity = cart_with_item.quantity + 1
+        print(cart_with_item.quantity)
+        db.session.merge(cart_with_item)
+        db.session.flush()
+        db.session.commit()
+    else:
+        cart = Cart(userid=current_user.id, productid=productId, quantity=1)
+        db.session.merge(cart)
+        db.session.flush()
+        db.session.commit()
+        print("new cart")
+
+
+    print(current_user)
+    # Using Flask-SQLAlchmy normal query
+    # extractAndPersistKartDetailsUsingkwargs(productId)
+    flash('Item successfully added to cart !!', 'success')
+    return redirect(url_for('cart'))
+
+def extractAndPersistKartDetailsUsingSubquery(productId):
+    userId = User.query.with_entities(User.id).first()
+    userId = userId[0]
+
+    subqury = (Cart.userid == userId).filter(Cart.productid == productId).subquery()
+    qry = db.session.query(Cart.quantity).select_entity_from(subqury).all()
+
+    
