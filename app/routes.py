@@ -44,6 +44,7 @@ def order():
 
 
 @app.route('/cart')
+@login_required
 def cart():
     if current_user.is_authenticated:
         uid = current_user.id
