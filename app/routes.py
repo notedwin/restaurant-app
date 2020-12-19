@@ -10,6 +10,14 @@ from flask_login import login_user, current_user, logout_user, login_required
 #     }
 #     return render(request, "products.html", context)
 
+@app.context_processor
+def inject_cart():
+    if current_user.is_authenticated:
+        uid = current_user.id
+        carts = Cart.query.filter_by(userid = uid).all()
+        carts = len(carts)
+        return dict(len_carts=carts)
+    return dict(len_carts=0)
 @app.route('/')
 def index():
     return render_template('index.html')

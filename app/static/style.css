@@ -4,6 +4,11 @@ nav,
   font-size: 1.2rem;
   color: white;
   margin-bottom: 0;
+  background-color: #006491 !important;
+}
+
+a:hover {
+  color: #000000 !important;
 }
 
 .options {
@@ -21,4 +26,8 @@ nav,
   max-width: 330px;
   padding: 15px;
   margin: auto;
+}
+
+.rounded {
+  border-radius: .75rem !important;
 }
