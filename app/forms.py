@@ -30,6 +30,20 @@ class RegistrationForm(FlaskForm):
     if email:
       raise ValidationError('Email already in Use.')
 
+class CheckoutForm(FlaskForm):
+  first_name = StringField('First Name', 
+                 [validators.DataRequired()])
+  last_name = StringField('Last Name', 
+                 [validators.DataRequired()])
+  email = StringField('Email Address', [validators.DataRequired(), 
+             validators.Email(), validators.Length(min=6, max=35)])
+  address = StringField('Address', [validators.DataRequired()])
+  country = StringField('Country', [validators.DataRequired()])
+  state = StringField('State', [validators.DataRequired()])
+  zip_code = StringField('Zip', [validators.DataRequired()])
+  submit = SubmitField('Continue to Payment')
+
+
 #class CheckoutForm(forms.Form):
 #    shipping_address = forms.CharField(required=False)
 #    shipping_country = CountryField(blank_label='(select country)').formfield(

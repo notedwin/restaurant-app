@@ -28,6 +28,24 @@ a:hover {
   margin: auto;
 }
 
+.form-checkout{
+  width: 100%;
+  max-width: 980px;
+}
+
 .rounded {
   border-radius: .75rem !important;
+}
+
+.form-group > input{
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.alert {
+  font-size: 20px !important;
 }

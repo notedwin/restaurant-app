@@ -1,19 +1,25 @@
 {%- extends "customer/base.html" %}
 {% block content %}
-<div class="container">
-    <h2>Hello, {{ current_user.first_name }}</h2>
-    <h3>Points: {{ current_user.points }}</h3>
+<body>
+    <div class="container">
+        <h2>Hello, {{ current_user.first_name }}</h2>
+        <h3>Points: {{ current_user.points }}</h3>
+    
+        <button class="btn btn-dark" onclick="">
+            <h3>View Order History</h3>
+        </button>
 
-    <button class="btn btn-dark">
-        <h3>View Order History</h3>
-    </button>
-    <button class="btn btn-dark">
-        <h3>View saved Cards</h3>
-    </button>
-    <button class="btn btn-dark">
-        <h3>View saved addresses</h3>
-    </button>
-
-</div>
-
+        <input type="button" class="btn btn-dark" onclick="location.href='{{ url_for('order_history')}}';" value="Go to order_history" />
+        <button class="btn btn-dark">
+            <h3>View saved Cards</h3>
+        </button>
+        <button class="btn btn-dark">
+            <h3>View saved addresses</h3>
+        </button>
+    
+    </div>
+    <script>
+        
+    </script>
+</body>
 {%- endblock %}
