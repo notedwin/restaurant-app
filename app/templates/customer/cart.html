@@ -34,59 +34,23 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-
+            <hr class="mb-4">
             <form method="POST" class="form-checkout">
                 {{ form.hidden_tag() }}
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="John" value="" required="">
-                        <div class="invalid-feedback">
-                            Valid first name is required.
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Doe" value="" required="">
-                        <div class="invalid-feedback">
-                            Valid last name is required.
-                        </div>
-                    </div>
-                </div>
+                {{ render_field(form.full_name, "Mr pie") }}
                 {{ render_field(form.email, "JohnDoe@gmail.com") }}
                 {{ render_field(form.address, "3333 S Wabash Ave") }}
-
                 <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label for="country">Country</label>
-                        <select class="custom-select d-block w-100" id="country" required="">
-                            <option value="">Choose...</option>
-                            <option>United States</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid country.
-                        </div>
+                    <div class="col-md-4 order-md-2">
+                        {{ render_field(form.country, "Mr pie") }}
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="state">State</label>
-                        <select class="custom-select d-block w-100" id="state" required="">
-                            <option value="">Choose...</option>
-                            <option>Illinois</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please provide a valid state.
-                        </div>
+                    <div class="col-md-4 order-md-2">
+                        {{ render_field(form.state, "Mr pie") }}
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" placeholder="" required="">
-                        <div class="invalid-feedback">
-                            Zip code required.
-                        </div>
+                    <div class="col-md-4 order-md-2">
+                        {{ render_field(form.zip_code, "Mr pie") }}
                     </div>
                 </div>
-
-                <hr class="mb-4">
                 <div class="form-group">
                     {{ form.submit(class="btn btn-primary btn-block") }}
                 </div>

@@ -79,18 +79,31 @@ def cart():
             carts = Cart.query.filter_by(userid=uid).all()
             items = []
             total = 0
-        for cart in carts:
-            item = Item.query.filter_by(id=cart.productid).first()
-            items.append(item)
-            total = total + item.cost
+            for cart in carts:
+                item = Item.query.filter_by(id=cart.productid).first()
+                items.append(item)
+                total = total + item.cost
         return render_template('customer/cart.html', items=items, total=total, form=form)
 
     if request.method == 'POST':
+        if current_user.is_authenticated:
+            uid = current_user.id
+            carts = Cart.query.filter_by(userid=uid).all()
+            items = []
+            total = 0
+            for cart in carts:
+                item = Item.query.filter_by(id=cart.productid).first()
+                items.append(item)
+                total = total + item.cost
+
+        form_data = request.values.copy()
+        for key, value in request.form.items():
+                print("key: {0}, value: {1}".format(key, value))
+        
         if form.validate_on_submit():
             # create an order
-            for key, value in request.form.items():
-                print("key: {0}, value: {1}".format(key, value))
-            flash(f'Order Created for {form.first_name.data}!', 'success')
+            
+            flash(f'Order Created for {form.full_name.data}!', 'success')
             return redirect(url_for('index'))
         else:
             flash('Order not created.', 'danger')
