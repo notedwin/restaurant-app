@@ -1,37 +1,22 @@
 {%- extends "customer/base.html" %}
-{% block content %}
-<h2 class="text-center">How do you want your Sonimod's today? <h2>
-        <form method="post" action="/order">
-            <ul class="list-inline" style="display:flex; justify-content: space-around;">
-                <li class="list-inline-item">
-                    <br>
-                    <span class="fas fa-pizza-slice" style="font-size: 3rem;">
-                        <br>
-                        <h2>Delivery</h2>
-                        <input type="button" class="btn btn-dark" name="order-type" value="Delivery"></input>
-                    </span>
-                <li class="list-inline-item">
-                    <br>
-                    <span class="fas fa-pizza-slice" style="font-size: 3rem;">
-                        <br>
-                        <h2>Pick-Up</h2>
-                        <input type="button" class="btn btn-dark" name="order-type" value="Pick-Up"></input>
-                    </span>
-                </li>
-                <li class="list-inline-item">
-                    <br>
-                    <span class="fas fa-pizza-slice" style="font-size: 3rem;">
-                        <br>
-                        <h2>Dine-In</h2>
-                        <input type="button" class="btn btn-dark" name="order-type" value="Dine-In"></input>
-                    </span>
-                </li>
-            </ul>
-        </form>
-        <div class="d-flex justify-content-center">
-            <ul class="list-inline" style="display:flex; justify-content: space-between;">
-                <li class="list-inline-item"><a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Guest</a></li>
-                <li class="list-inline-item"><a class="btn btn-lg btn-success" href={{ url_for('create_order')}}>Continue as Sonimod Memeber</a></li>
-            </ul>
+{% block page_content %}
+<div class="container py-5">
+    <h1>Sonimod Menu</h1>
+    <div class="row mt-5 justify-content-center">
+        {% for item in items %}
+        <div class="card card-custom mx-2 mb-3" style="max-width: 300px;">
+            <img class="card-img-top" src="{{url_for('static', filename='pizza.jpg')}}" alt="{{item.name}}">
+            <div class="card-body">
+                <h5 class="card-title">{{item.name}}</h5>
+                <p>{{item.description}}</p>
+                <p class="card-text">Cost: {{item.cost}}</p>
+
+                <a href="{{ url_for('addToCart', productId=item.id)}}" class="btn btn-outline-primary"
+                    style="width: 100%;">Add to cart</a>
+            </div>
         </div>
-        {% endblock %}
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

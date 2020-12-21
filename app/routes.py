@@ -32,6 +32,16 @@ def order_history():
     # get orders from user in array and then iterate over them
     return render_template('customer/order_history.html')
 
+@app.route('/saved_cards')
+def saved_cards():
+    # get orders from user in array and then iterate over them
+    return render_template('customer/saved_cards.html')
+
+@app.route('/saved_addresses')
+def saved_addresses():
+    # get orders from user in array and then iterate over them
+    return render_template('customer/saved_addresses.html')
+
 
 @app.route('/')
 def index():
@@ -49,23 +59,14 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/order', methods=['GET', 'POST'])
+@app.route('/order')
 def order():
-    if request.method == 'POST':
-        if request.form['submit_button'] == 'Delivery':
-            # pass variable to create order
-            pass
-        elif request.form['submit_button'] == 'Pick-up':
-            # pass variable to create order
-            pass
-        elif request.form['submit_button'] == 'Pick-up':
-            # pass variable to create order
-            pass
-        else:
-            # return order
-            pass
-    elif request.method == 'GET':
-        return render_template('customer/order.html')
+    items = Item.query.all()
+    return render_template('customer/order.html', title='Create an Order', items=items)
+
+@app.route('/payment', methods=['GET', 'POST'])
+def payment():
+    return render_template('customer/payment.html')
 
 
 @app.route('/cart', methods=['GET', 'POST'])
@@ -86,25 +87,23 @@ def cart():
         return render_template('customer/cart.html', items=items, total=total, form=form)
 
     if request.method == 'POST':
-        if current_user.is_authenticated:
-            uid = current_user.id
-            carts = Cart.query.filter_by(userid=uid).all()
-            items = []
-            total = 0
-            for cart in carts:
-                item = Item.query.filter_by(id=cart.productid).first()
-                items.append(item)
-                total = total + item.cost
 
         form_data = request.values.copy()
         for key, value in request.form.items():
                 print("key: {0}, value: {1}".format(key, value))
         
         if form.validate_on_submit():
+            # get items from cart
+            # make get total 
+            # orderid # using uuid
+            # order_date #date time
+            # total_price = db.Column(db.Integer, nullable=False
+            # forgein key userid
+            # many to one items to orders 
             # create an order
             
             flash(f'Order Created for {form.full_name.data}!', 'success')
-            return redirect(url_for('index'))
+            return redirect(url_for('payment'))
         else:
             flash('Order not created.', 'danger')
             return redirect(url_for('cart'))
@@ -157,19 +156,6 @@ def account():
     return render_template('customer/account.html', title='Account')
 
 
-@app.route('/order/create')
-@login_required
-def create_order():
-    items = Item.query.all()
-    return render_template('customer/create-order.html', title='Create an Order', items=items)
-
-
-@app.route('/order/create')
-@login_required
-def guest_create_order():
-    return render_template('customer/create-order.html', title='Create an Order')
-
-
 @app.route('/staff-portal')
 def staff():
     # ask to sign in
@@ -196,7 +182,7 @@ def addToCart(productId):
     # Using Flask-SQLAlchmy normal query
     # extractAndPersistKartDetailsUsingkwargs(productId)
     flash('Item successfully added to cart !!', 'success')
-    return redirect(url_for('cart'))
+    return redirect(url_for('order'))
 
 
 @app.route("/removeItem/<int:productId>")
