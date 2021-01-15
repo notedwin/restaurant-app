@@ -4,6 +4,11 @@ nav,
   font-size: 1.2rem;
   color: white;
   margin-bottom: 0;
+  background-color: #006491 !important;
+}
+
+a:hover {
+  color: #000000 !important;
 }
 
 .options {
@@ -21,4 +26,26 @@ nav,
   max-width: 330px;
   padding: 15px;
   margin: auto;
+}
+
+.form-checkout{
+  width: 100%;
+  max-width: 980px;
+}
+
+.rounded {
+  border-radius: .75rem !important;
+}
+
+.form-group > input{
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.alert {
+  font-size: 20px !important;
 }
