@@ -1,8 +1,9 @@
 from flask import request, session, redirect, url_for, render_template, flash, send_from_directory, Markup, jsonify
 from app import app, db, bcrypt
-from app.model import User, Item, Cart
+from app.model import User, Item, Cart, Order
 from app.forms import RegistrationForm, LoginForm, CheckoutForm
 from flask_login import login_user, current_user, logout_user, login_required
+from datetime import datetime
 
 # def products(request):
 #     context = {
@@ -32,10 +33,12 @@ def order_history():
     # get orders from user in array and then iterate over them
     return render_template('customer/order_history.html')
 
+
 @app.route('/saved_cards')
 def saved_cards():
     # get orders from user in array and then iterate over them
     return render_template('customer/saved_cards.html')
+
 
 @app.route('/saved_addresses')
 def saved_addresses():
@@ -64,6 +67,7 @@ def order():
     items = Item.query.all()
     return render_template('customer/order.html', title='Create an Order', items=items)
 
+
 @app.route('/payment', methods=['GET', 'POST'])
 def payment():
     return render_template('customer/payment.html')
@@ -87,27 +91,29 @@ def cart():
         return render_template('customer/cart.html', items=items, total=total, form=form)
 
     if request.method == 'POST':
-
-        form_data = request.values.copy()
-        for key, value in request.form.items():
+        if current_user.is_authenticated:
+            uid = current_user.id
+            carts = Cart.query.filter_by(userid=uid).all()
+            form_data = request.values.copy()
+            for key, value in request.form.items():
                 print("key: {0}, value: {1}".format(key, value))
-        
-        if form.validate_on_submit():
-            # get items from cart
-            # make get total 
-            # orderid # using uuid
-            # order_date #date time
-            # total_price = db.Column(db.Integer, nullable=False
-            # forgein key userid
-            # many to one items to orders 
-            # create an order
-            
-            flash(f'Order Created for {form.full_name.data}!', 'success')
-            return redirect(url_for('payment'))
-        else:
-            flash('Order not created.', 'danger')
-            return redirect(url_for('cart'))
-        
+
+            if form.validate_on_submit():
+                total = 0
+                for cart in carts:
+                    item = Item.query.filter_by(id=cart.productid).first()
+                    total += item.cost
+                # fix this line by adding uiud
+                #order = Order(orderid=,order_date=datetime.utcnow(),
+                              total_price=total, userid=uid)
+                db.session.add(order)
+                db.session.commit()
+
+                flash(f'Order Created for {form.full_name.data}!', 'success')
+                return redirect(url_for('payment'))
+            else:
+                flash('Order not created.', 'danger')
+                return redirect(url_for('cart'))
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -2,6 +2,7 @@ from app import db, login_manager
 from flask_login import UserMixin
 from slugify import slugify
 from sqlalchemy import event
+from datetime import datetime
 
 
 ADDRESS_CHOICES = (
@@ -48,8 +49,11 @@ class Item(db.Model):
 class Cart(db.Model):
     __table_args__ = {'extend_existing': True}
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+    # only 1 item allowed in cart
     productid = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
+    #items = db.relationship('Item', secondary=tags, lazy='subquery',backref=db.backref('cart', lazy=True))
+
 
     def __repr__(self):
         return f"Cart('{self.userid}', '{self.productid}', '{self.quantity}')"
@@ -57,10 +61,10 @@ class Cart(db.Model):
 class Order(db.Model):
     __table_args__ = {'extend_existing': True}
     orderid = db.Column(db.Integer, primary_key=True)
-    order_date = db.Column(db.DateTime, nullable=False)
+    order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     total_price = db.Column(db.Integer, nullable=False)
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
-    #items = relationship('Study', secondary=products_studies_association, backref='products')
+    
 
 class OrderedProduct(db.Model):
     __table_args__ = {'extend_existing': True}
