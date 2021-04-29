@@ -3,12 +3,13 @@ from flask_login import UserMixin
 from slugify import slugify
 from sqlalchemy import event
 from datetime import datetime
+import enum
 
 
-ADDRESS_CHOICES = (
-    ('B', 'Billing'),
-    ('S', 'Shipping'),
-)
+class OrderType(enum.Enum):
+    delivery = 'delivery'
+    pickup = 'pickup'
+    dine = 'dine'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -60,10 +61,15 @@ class Cart(db.Model):
 
 class Order(db.Model):
     __table_args__ = {'extend_existing': True}
-    orderid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    orderid = db.Column(db.Integer, primary_key=True)
     order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     total_price = db.Column(db.Integer, nullable=False)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+    #order_type = db.Column(
+    #    db.Enum(EmploymentStatusEnum), 
+    #    default=EmploymentStatusEnum.employed,
+    #    nullable=False
+    #)
     
 
 class OrderedProduct(db.Model):

@@ -7,6 +7,13 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_admin import Admin
+import stripe
+from dotenv import load_dotenv, find_dotenv
+
+
+load_dotenv(find_dotenv())
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
+stripe.api_version = os.getenv('STRIPE_API_VERSION')
 
 
 app = Flask(__name__,static_url_path='/static',static_folder='static')

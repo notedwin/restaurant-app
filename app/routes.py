@@ -71,7 +71,12 @@ def order():
 
 @app.route('/payment', methods=['GET', 'POST'])
 def payment():
-    return render_template('customer/payment.html')
+    if request.method == 'GET':
+        return render_template('customer/payment.html')
+    if request.method == 'POST':
+        #TODO: left off trying to integrate stripe
+        return render_template('customer/payment.html')
+
 
 
 @app.route('/cart', methods=['GET', 'POST'])
@@ -109,6 +114,8 @@ def cart():
                               total_price=total, userid=uid)
                 db.session.add(order)
                 db.session.commit()
+
+                # once order is added empty cart
 
                 flash(f'Order Created for {form.full_name.data}!', 'success')
                 return redirect(url_for('payment'))
