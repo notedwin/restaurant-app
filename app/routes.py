@@ -4,6 +4,7 @@ from app.model import User, Item, Cart, Order
 from app.forms import RegistrationForm, LoginForm, CheckoutForm
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
+import uuid
 
 # def products(request):
 #     context = {
@@ -103,8 +104,8 @@ def cart():
                 for cart in carts:
                     item = Item.query.filter_by(id=cart.productid).first()
                     total += item.cost
-                # fix this line by adding uiud
-                #order = Order(orderid=,order_date=datetime.utcnow(),
+                #fix this line by adding uiud
+                order = Order(order_date=datetime.utcnow(),
                               total_price=total, userid=uid)
                 db.session.add(order)
                 db.session.commit()
