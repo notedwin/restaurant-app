@@ -61,15 +61,15 @@ class Cart(db.Model):
 
 class Order(db.Model):
     __table_args__ = {'extend_existing': True}
-    orderid = db.Column(db.Integer, primary_key=True)
+    orderid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     total_price = db.Column(db.Integer, nullable=False)
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
-    #order_type = db.Column(
-    #    db.Enum(EmploymentStatusEnum), 
-    #    default=EmploymentStatusEnum.employed,
-    #    nullable=False
-    #)
+    order_type = db.Column(
+        db.Enum(OrderType), 
+        default=OrderType.delivery,
+        nullable=False
+    )
     
 
 class OrderedProduct(db.Model):

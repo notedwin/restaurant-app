@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired,Length,Email,EqualTo, ValidationError
 from wtforms import validators
 from app.model import User
@@ -38,7 +38,10 @@ class CheckoutForm(FlaskForm):
   country = StringField('Country', [validators.DataRequired()])
   state = StringField('State', [validators.DataRequired()])
   zip_code = StringField('Zip', [validators.DataRequired(), validators.Length(min=4,max=6)])
+  # could populate from ENUM
+  orderType = SelectField('How do you want your food?', choices = [('dine','Dine-In'),('delivery','Delivery'),('pickup','Pick-up')])
   submit = SubmitField('Continue to Payment')
+
 
 
 #class CheckoutForm(forms.Form):

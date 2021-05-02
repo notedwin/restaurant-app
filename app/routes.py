@@ -1,5 +1,5 @@
 from flask import request, session, redirect, url_for, render_template, flash, send_from_directory, Markup, jsonify
-from app import app, db, bcrypt
+from app import app, db, bcrypt, stripe
 from app.model import User, Item, Cart, Order
 from app.forms import RegistrationForm, LoginForm, CheckoutForm
 from flask_login import login_user, current_user, logout_user, login_required
@@ -72,11 +72,63 @@ def order():
 @app.route('/payment', methods=['GET', 'POST'])
 def payment():
     if request.method == 'GET':
-        return render_template('customer/payment.html')
-    if request.method == 'POST':
-        #TODO: left off trying to integrate stripe
-        return render_template('customer/payment.html')
+        if current_user.is_authenticated:
+            uid = current_user.id
+            carts = Cart.query.filter_by(userid=uid).all()
+            total = 0
+            for cart in carts:
+                item = Item.query.filter_by(id=cart.productid).first()
+                total = total + item.cost
+            intent = stripe.PaymentIntent.create(
+                amount=(int)(total*100),
+                currency='usd',
+                # Verify your integration in this guide by including this parameter
+                metadata={'integration_check': 'accept_a_payment'},
+            )
+        return render_template('customer/payment.html', client_secret=intent.client_secret)
 
+    if request.method == 'POST':
+        data = request.get_json()
+    try:
+        if 'paymentMethodId' in data:
+            order_amount = calculate_order_amount(data['items'])
+
+            # Create new PaymentIntent with a PaymentMethod ID from the client.
+            intent = stripe.PaymentIntent.create(
+                amount=order_amount,
+                currency=data['currency'],
+                payment_method=data['paymentMethodId'],
+                confirmation_method='manual',
+                confirm=True,
+                # If a mobile client passes `useStripeSdk`, set `use_stripe_sdk=true`
+                # to take advantage of new authentication features in mobile SDKs.
+                use_stripe_sdk=True if 'useStripeSdk' in data and data['useStripeSdk'] else None,
+            )
+            # After create, if the PaymentIntent's status is succeeded, fulfill the order.
+        elif 'paymentIntentId' in data:
+            # Confirm the PaymentIntent to finalize payment after handling a required action
+            # on the client.
+            intent = stripe.PaymentIntent.confirm(data['paymentIntentId'])
+            # After confirm, if the PaymentIntent's status is succeeded, fulfill the order.
+
+        return generate_response(intent)
+    except stripe.error.CardError as e:
+        return jsonify({'error': e.user_message})
+
+
+def generate_response(intent):
+    status = intent['status']
+    if status == 'requires_action' or status == 'requires_source_action':
+        # Card requires authentication
+        return jsonify({'requiresAction': True, 'paymentIntentId': intent['id'], 'clientSecret': intent['client_secret']})
+    elif status == 'requires_payment_method' or status == 'requires_source':
+        # Card was not properly authenticated, suggest a new payment method
+        return jsonify({'error': 'Your card was denied, please provide a new payment method'})
+    elif status == 'succeeded':
+        # Payment is complete, authentication not required
+        # To cancel the payment you will need to issue a Refund (https://stripe.com/docs/api/refunds)
+        print("💰 Payment received!")
+        return jsonify({'clientSecret': intent['client_secret']})
 
 
 @app.route('/cart', methods=['GET', 'POST'])
@@ -109,9 +161,10 @@ def cart():
                 for cart in carts:
                     item = Item.query.filter_by(id=cart.productid).first()
                     total += item.cost
-                #fix this line by adding uiud
+                # fix this line by adding uiud
+                # have to change to AI using GUI for app.db
                 order = Order(order_date=datetime.utcnow(),
-                              total_price=total, userid=uid)
+                              total_price=total, userid=uid, order_type=form.orderType.data)
                 db.session.add(order)
                 db.session.commit()
 
