@@ -1,20 +1,17 @@
 # TODO list
 
-## High priority, High Complexity
+## High priority
 
-- Add cart system
-- Finish ordering process
+- figure out what I want to do once the Order suceeds, using webhooks and the clients HTML
+- using webhook do the point calculcation since we only want orders that suceed
 
-## High priority, Low Complexity
+- fill out stripe with customer data
+- even though its a test enviorment
 
-- Add point calculation
+## Low priority
 
-## Low priority, Low Complexity
+- Add content to Menu and different images for products
 
-- Add content to Menu and index page
-
-## Low priority, High Complexity
-make slector fields on forms.py for
 ## next
 
 tell user what errors there are in inputs
